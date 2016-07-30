@@ -16,19 +16,21 @@ extern keymap_config_t keymap_config;
 // entirely and just use numbers.
 #define _QWERTY 0
 #define _COLEMAK 1
-#define _LOWER 3
-#define _RAISE 4
-#define _PLOVER 5
-#define _FUNCTION 6
-#define _NUMERIC 7
+#define _LOWER 2
+#define _RAISE 3
+#define _FUNCTION 4
+#define _NUMERIC 5
+#define _PLOVER 6
 #define _ADJUST 16
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
+  NUMERIC,
   PLOVER,
   LOWER,
   RAISE,
+  EXT_NUM,
   EXT_PLV
 };
 
@@ -53,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
   {KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT},
   {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT},
-  {MO(6),   KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+  {MO(4),   KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
 
 /* Colemak
@@ -71,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_ESC,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC},
   {KC_TAB,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_ENT},
   {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT },
-  {MO(6),   KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+  {MO(4),   KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
 
 /* Lower
@@ -110,6 +112,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
+/* Function layer
+ * ,-----------------------------------------------------------------------------------.
+ * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  | F12  |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      | Prev | Play | Next |      |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      | Mute | Vol- | Vol+ |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End  |
+ * `-----------------------------------------------------------------------------------'
+ */
+
+[_FUNCTION] = {
+  {KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,    KC_F11,  KC_F12},
+  {_______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT,   _______, _______},
+  {_______, _______, _______, _______, _______, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU,   _______, _______},
+  {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDOWN, KC_PGUP, KC_END}
+},
+
+/* Numeric layer
+ * ,-----------------------------------------------------------------------------------.
+ * | Esc  |      |      |      |      |      |      |  7   |  8   |  9   |  /   | Bksp |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Tab  |      |      |      |      |      |      |  4   |  5   |  6   |  *   |Enter |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |Shift |      |      |      |      |      |      |  1   |  2   |  3   |  -   |Shift |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Exit |      |      |      |      |    Space    |  0   |  0   |  .   |  +   |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+
+[_NUMERIC] = {
+  {KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P7, KC_P8, KC_P9,   KC_PSLS, KC_BSPC},
+  {KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P4, KC_P5, KC_P6,   KC_PAST, KC_PENT},
+  {KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P1, KC_P2, KC_P3,   KC_PMNS, KC_RSFT},
+  {EXT_NUM, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SPC,  KC_SPC,  KC_P0, KC_P0, KC_PDOT, KC_PPLS, XXXXXXX}
+},
+
 /* Plover layer (http://opensteno.org)
  * ,-----------------------------------------------------------------------------------.
  * |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |
@@ -129,49 +169,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {EXT_PLV, XXXXXXX, XXXXXXX, KC_C,    KC_V,    XXXXXXX, XXXXXXX, KC_N,    KC_M,    XXXXXXX, XXXXXXX, XXXXXXX}
 },
 
-/* Function layer
- * ,-----------------------------------------------------------------------------------.
- * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  | F12  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Num  |      |      |      |      |      |      | Prev | Play | Next |      |      |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Caps |      |      |      |      |      |      | Mute | Vol- | Vol+ |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End  |
- * `-----------------------------------------------------------------------------------'
- */
-
-[_FUNCTION] = {
-  {KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,    KC_F11,  KC_F12},
-  {TG(7),   _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT,   _______, _______},
-  {KC_CAPS, _______, _______, _______, _______, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU,   _______, _______},
-  {_______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDOWN, KC_PGUP, KC_END}
-},
-
-/* Numeric layer
- * ,-----------------------------------------------------------------------------------.
- * | Num  |      |      |      |      |      |      |  7   |  8   |  9   |  /   |      |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |  4   |  5   |  6   |  *   |      |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |  1   |  2   |  3   |  -   |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |  0   |  0   |  .   |  +   |      |
- * `-----------------------------------------------------------------------------------'
- */
-
-[_NUMERIC] = {
-  {TG(7),   _______, _______, _______, _______, _______, _______, KC_7, KC_8, KC_9,   KC_SLSH, _______},
-  {_______, _______, _______, _______, _______, _______, _______, KC_4, KC_5, KC_6,   KC_ASTR, _______},
-  {_______, _______, _______, _______, _______, _______, _______, KC_1, KC_2, KC_3,   KC_MINS, _______},
-  {_______, _______, _______, _______, _______, _______, _______, KC_0, KC_0, KC_DOT, KC_PLUS, _______}
-},
-
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
  * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm|AGswap|Qwerty|Colemk|Plover|      |      |
+ * |      |      |      |Aud on|Audoff|AGnorm|AGswap|Qwerty|Colemk|Numerc|Plover|      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -180,7 +182,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = {
   {_______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL},
-  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, PLOVER,  _______, _______},
+  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, NUMERIC, PLOVER,  _______},
   {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 }
@@ -192,9 +194,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 float tone_startup[][2]    = SONG(STARTUP_SOUND);
 float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
-float tone_dvorak[][2]     = SONG(DVORAK_SOUND);
 float tone_colemak[][2]    = SONG(COLEMAK_SOUND);
+float tone_numeric[][2]    = SONG(PLOVER_SOUND);
 float tone_plover[][2]     = SONG(PLOVER_SOUND);
+float tone_numeric_gb[][2] = SONG(PLOVER_GOODBYE_SOUND);
 float tone_plover_gb[][2]  = SONG(PLOVER_GOODBYE_SOUND);
 float music_scale[][2]     = SONG(MUSIC_SCALE_SOUND);
 
@@ -247,6 +250,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case NUMERIC:
+      if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+          stop_all_notes();
+          PLAY_NOTE_ARRAY(tone_numeric, false, 0);
+        #endif
+        layer_off(_RAISE);
+        layer_off(_LOWER);
+        layer_off(_ADJUST);
+        layer_on(_NUMERIC);
+      }
+      return false;
+      break;
     case PLOVER:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
@@ -263,6 +279,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keymap_config.raw = eeconfig_read_keymap();
         keymap_config.nkro = 1;
         eeconfig_update_keymap(keymap_config.raw);
+      }
+      return false;
+      break;
+    case EXT_NUM:
+      if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+          PLAY_NOTE_ARRAY(tone_numeric_gb, false, 0);
+        #endif
+        layer_off(_NUMERIC);
       }
       return false;
       break;
