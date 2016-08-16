@@ -222,13 +222,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case NUMERIC:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-          stop_all_notes();
           PLAY_NOTE_ARRAY(tone_numeric, false, 0);
         #endif
-        layer_off(_RAISE);
-        layer_off(_LOWER);
-        layer_off(_ADJUST);
-        layer_on(_NUMERIC);
+        persistant_default_layer_set(1UL<<_NUMERIC);
       }
       return false;
       break;
