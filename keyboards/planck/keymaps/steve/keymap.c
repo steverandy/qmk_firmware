@@ -118,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |      |      |      |      |      |      |  1   |  2   |  3   |  -   |Shift |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |    Space    |  0   |  0   |  .   |  +   |      |
+ * |      |      |      |      |Lower |    Space    |Raise |  0   |  .   |  +   |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -126,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P7, KC_P8, KC_P9,   KC_PSLS, KC_BSPC},
   {KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P4, KC_P5, KC_P6,   KC_PAST, KC_PENT},
   {KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P1, KC_P2, KC_P3,   KC_PMNS, KC_RSFT},
-  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SPC,  KC_SPC,  KC_P0, KC_P0, KC_PDOT, KC_PPLS, XXXXXXX}
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, LOWER,   KC_SPC,  KC_SPC,  RAISE, KC_P0, KC_PDOT, KC_PPLS, XXXXXXX}
 },
 
 /* Plover layer (http://opensteno.org)
