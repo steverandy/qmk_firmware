@@ -28,7 +28,6 @@ enum planck_keycodes {
   PLOVER,
   LOWER,
   RAISE,
-  EXT_NUM,
   EXT_PLV
 };
 
@@ -119,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Shift |      |      |      |      |      |      |  1   |  2   |  3   |  -   |Shift |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Exit |      |      |      |      |    Space    |  0   |  0   |  .   |  +   |      |
+ * |      |      |      |      |      |    Space    |  0   |  0   |  .   |  +   |      |
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -127,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P7, KC_P8, KC_P9,   KC_PSLS, KC_BSPC},
   {KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P4, KC_P5, KC_P6,   KC_PAST, KC_PENT},
   {KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P1, KC_P2, KC_P3,   KC_PMNS, KC_RSFT},
-  {EXT_NUM, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SPC,  KC_SPC,  KC_P0, KC_P0, KC_PDOT, KC_PPLS, XXXXXXX}
+  {XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SPC,  KC_SPC,  KC_P0, KC_P0, KC_PDOT, KC_PPLS, XXXXXXX}
 },
 
 /* Plover layer (http://opensteno.org)
@@ -162,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = {
   {_______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, KC_SLEP, KC_DEL},
-  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  NUMERIC, PLOVER,  _______,  _______},
+  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  NUMERIC, PLOVER,  _______, _______},
   {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 }
@@ -249,15 +248,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keymap_config.raw = eeconfig_read_keymap();
         keymap_config.nkro = 1;
         eeconfig_update_keymap(keymap_config.raw);
-      }
-      return false;
-      break;
-    case EXT_NUM:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_NOTE_ARRAY(tone_numeric_gb, false, 0);
-        #endif
-        layer_off(_NUMERIC);
       }
       return false;
       break;
